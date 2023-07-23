@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+    
+    body, html {
+      height: 100%;
+      line-height: 1.8;
+    }
+    
+    /* Full height image header */
+    .bgimg-1 {
+      background-position: center;
+      background-size: cover;
+      background-image: url("../static/2.jpg");
+      min-height: 100%;
+    }
+    
+    .w3-bar .w3-button {
+      padding: 16px;
+    }
+    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+
+    <title>{% block title %}Home{% endblock %}</title>
+  </head>
+  <body>
+   
+      
+          {% if user.is_authenticated %}
+          <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+      <div class="w3-bar w3-white w3-card" id="myNavbar">
+        <a href="#home" class="w3-bar-item w3-button w3-wide"><b><i>Fraud & Crime </i> </b></a>
+        <!-- Right-sided navbar links -->
+        <div class="w3-right w3-hide-small">
+          <a class="w3-bar-item w3-button" id="home" href="/">Home</a>
+          <a class="w3-bar-item w3-button" id="logout" href="/logout">Logout</a>
+          <a class="w3-bar-item w3-button" id="upload" href="/upload">Detection</a>
+          <a class="w3-bar-item w3-button" id="upload" href="/ticket">Ticket system</a>
+          <a class="w3-bar-item w3-button" id="upload" href="/static_dasbord">Static Dashbord</a>
+          <a class="w3-bar-item w3-button" id="upload" href="/upload_image">Upload Images</a>
+          <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
+          <a href="#team" class="w3-bar-item w3-button"><i class="fa fa-user"></i> TEAM</a>
+          <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> WORK</a>
+          <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+        
+        <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+    
+         
+          {% else %}
+          <a class="w3-bar-item w3-button" id="login" href="/login">Login</a>
+          <a class="w3-bar-item w3-button" id="signUp" href="/sign-up">Sign Up</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+   
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+
+    <div class="container">{% block content %} {% endblock %}</div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+{% block javascript %}
+    <script type="text/javascript">
+      function deleteNote(noteId) {
+  fetch("/delete-note", {
+    method: "POST",
+    body: JSON.stringify({ noteId: noteId }),
+  }).then((_res) => {
+    window.location.href = "/";
+  });
+  }
+</script>
+{% endblock %}
+  </body>
+</html>
